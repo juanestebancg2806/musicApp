@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Countries</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Countries</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+
+    </tr>
+    <tr th:each="country : ${countries}">
+        <td th:text="${country.id}">123</td>
+        <td th:text="${country.name}"> Spring in Action</td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

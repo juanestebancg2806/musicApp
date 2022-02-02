@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Authors</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Countries</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Names</th>
+        <th>Last names</th>
+        <th>Country</th>
+
+    </tr>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.id}">123</td>
+        <td th:text="${author.names}"> Spring in Action</td>
+        <td th:text="${author.lastnames}"> Spring in Action</td>
+        <td th:text="${author.country.name}"> Spring in Action</td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

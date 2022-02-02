@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Songs</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Songs</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Author</th>
+        <th>Genre</th>
+
+    </tr>
+    <tr th:each="song : ${songs}">
+        <td th:text="${song.id}">123</td>
+        <td th:text="${song.name}"> Spring in Action</td>
+        <td th:text="${song.duration}"> Spring in Action</td>
+        <td th:text="${song.author.names}"> Spring in Action</td>
+        <td th:text="${song.genre.name}"> Spring in Action</td>
+    </tr>
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Users</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Users</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Names</th>
+        <th>Lastnames</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Document type</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">123</td>
+        <td th:text="${user.names}"> Spring in Action</td>
+        <td th:text="${user.lastnames}"> Spring in Action</td>
+        <td th:text="${user.email}"> Spring in Action</td>
+        <td th:text="${user.password}"> Spring in Action</td>
+        <td> Default</td>
+    </tr>
+
+</table>
+<div class="container text-center">
+    <h3><a th:href="@{/users/register}">Signup</a></h3>
+
+</div>
+</body>
+</html>
