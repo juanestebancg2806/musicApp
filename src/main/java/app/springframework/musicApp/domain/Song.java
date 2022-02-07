@@ -1,5 +1,9 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -17,6 +21,7 @@ public class Song {
 
     @ManyToMany
     @JoinTable(name="user_song",joinColumns = @JoinColumn(name="song_id"),inverseJoinColumns = @JoinColumn(name="user_id"))
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
 
@@ -52,6 +57,7 @@ public class Song {
         this.name = name;
     }
 
+    @JsonBackReference(value = "song-genre")
     public Genre getGenre() {
         return genre;
     }
@@ -59,7 +65,7 @@ public class Song {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-
+    //@JsonManagedReference(value = "song-user") tener cuidado con las recursiones infinitas
     public Set<User> getUsers() {
         return users;
     }
@@ -76,9 +82,11 @@ public class Song {
         this.duration = duration;
     }
 
+    @JsonBackReference(value = "song-author")
     public Author getAuthor() {
         return author;
     }
+
 
     public void setAuthor(Author author) {
         this.author = author;

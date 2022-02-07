@@ -74,8 +74,8 @@ public class BootStrapData implements CommandLineRunner {
         song1.setGenre(genre1);
         song2.setAuthor(author2);
         song2.setGenre(genre2);
-        songRepository.save(song1);
-        songRepository.save(song2);
+        //songRepository.save(song1);
+        //songRepository.save(song2);
 
 
 
@@ -87,8 +87,8 @@ public class BootStrapData implements CommandLineRunner {
         user2.setDocument(document2);
         user2.setId(34L);
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+        //userRepository.save(user1);
+        //userRepository.save(user2);
 
 
 
@@ -99,12 +99,12 @@ public class BootStrapData implements CommandLineRunner {
         user2.getSongs().add(song2);
         song2.getUsers().add(user2);
 
-        //userRepository.save(user1);
-        //userRepository.save(user2);
+        userRepository.save(user1);
+        userRepository.save(user2);
 
         try {
-            //songRepository.save(song1);
-            //songRepository.save(song2);
+            songRepository.save(song1);
+            songRepository.save(song2);
 
         }catch (Exception e){
             System.out.println(e.getMessage());

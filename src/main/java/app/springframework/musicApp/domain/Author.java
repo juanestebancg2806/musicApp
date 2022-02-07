@@ -1,5 +1,8 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -52,6 +55,7 @@ public class Author {
         this.lastnames = lastnames;
     }
 
+    @JsonManagedReference(value = "song-author")
     public Set<Song> getSongs() {
         return songs;
     }
@@ -60,6 +64,7 @@ public class Author {
         this.songs = songs;
     }
 
+    @JsonBackReference(value = "author-country")
     public Country getCountry() {
         return country;
     }

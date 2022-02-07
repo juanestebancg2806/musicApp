@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     private final UserRepository userRepository;
 
+
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -46,6 +47,12 @@ public class UserController {
         userRepository.save(user);
 
         return "users/registered";
+    }
+    @GetMapping("/users/login")
+    public String getLoginForm(Model model){
+        model.addAttribute("user",new User());
+
+        return "users/login";
     }
 
 

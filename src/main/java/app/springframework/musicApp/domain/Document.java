@@ -1,5 +1,7 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.*;
 
 import javax.persistence.*;
@@ -23,6 +25,7 @@ public class Document {
 
     }
 
+    @JsonManagedReference(value = "user-document")
     public Set<User> getUsers() {
         return users;
     }

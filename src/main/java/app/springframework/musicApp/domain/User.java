@@ -1,5 +1,9 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.*;
@@ -12,6 +16,7 @@ public class User {
 
     private String names,lastnames,email,password;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date birthdate;
 
     @ManyToOne
@@ -32,6 +37,7 @@ public class User {
     public User() {
     }
 
+    //@JsonBackReference(value = "song-user")
     public Set<Song> getSongs() {
         return songs;
     }
@@ -87,6 +93,7 @@ public class User {
         this.birthdate = birthdate;
     }
 
+    @JsonBackReference(value = "user-document")
     public Document getDocument() {
         return document;
     }

@@ -1,5 +1,7 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -38,6 +40,7 @@ public class Genre {
         this.name = name;
     }
 
+    @JsonManagedReference(value = "song-genre")
     public Set<Song> getSongs() {
         return songs;
     }

@@ -1,5 +1,8 @@
 package app.springframework.musicApp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -9,6 +12,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
 
     private String name;
 
@@ -39,6 +43,7 @@ public class Country {
         this.name = name;
     }
 
+    @JsonManagedReference(value = "author-country")
     public Set<Author> getAuthors() {
         return authors;
     }
