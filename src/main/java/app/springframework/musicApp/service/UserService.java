@@ -65,6 +65,7 @@ public class UserService {
         List<User> users = this.userRepository.findByNames(names);
         if(users.size() > 0){
             User u = users.get(0);
+            u.getSongs().stream().forEach(s -> s.getUsers().remove(u)); //Se deben borrar todas las canciones de su playlist para que no haya falla
             this.userRepository.deleteById(u.getId());
             System.out.println("User deleted JSON body");
         }

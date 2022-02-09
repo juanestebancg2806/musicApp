@@ -68,10 +68,11 @@ public class SongService {
 
     }
 
-    public void deleteByName(String name){
+    public void deleteByName(String name){//si intento borrar uno que este en USER_SONG lanza excepcion, revisar cascade types
         List<Song> songs = this.songRepository.findByName(name);
         if(songs.size() > 0){
             Song s = songs.get(0);
+            s.getUsers().stream().forEach(u -> u.getSongs().remove(s)); //se debe borrar la cancion de los usuarios que la tenian
             this.songRepository.deleteById(s.getId());
             System.out.println("Song deleted JSON body");
         }
