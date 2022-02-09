@@ -35,11 +35,16 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/authors/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createCountry(@RequestBody Author author){
-        this.authorService.add(author);
+    public void createAuthor(@RequestBody Map<String,String> json){
+        this.authorService.add(json.get("names"),json.get("lastnames"),json.get("countryName"));
+    }
+
+    @PostMapping(value = "/authors/update",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateAuthor(@RequestBody Map<String,String> json){
+        this.authorService.updateByName(json.get("names"),json.get("newNames"),json.get("newLastnames"),json.get("countryName"));
     }
     @PostMapping(value = "/authors/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteCountry(@RequestBody Map<String,String> json){
+    public void deleteAuthor(@RequestBody Map<String,String> json){
         this.authorService.deleteByName(json.get("names"));
     }
 
