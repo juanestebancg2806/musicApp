@@ -3,56 +3,50 @@ package app.springframework.musicApp.controllers;
 import app.springframework.musicApp.domain.Document;
 import app.springframework.musicApp.domain.User;
 import app.springframework.musicApp.repositories.UserRepository;
+import app.springframework.musicApp.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+import java.util.Map;
+
+@RestController
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService ;
 
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @RequestMapping("/users")
-    public String getUsers(Model model){
-        model.addAttribute("users",userRepository.findAll());
-        return  "users/index";
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return this.userService.getUsers();
 
     }
-    @GetMapping("/users/register")
-    public String getRegistrationForm(Model model){ //Como hago para traer los documentos? Necesitaria una repo aqui y agregarlos al modelo
-        model.addAttribute("user",new User());
-        return "users/signup";
+
+
+    @GetMapping("/users/info")
+    public List <Map<String,String>> getUsersInfo() {
+        return this.userService.getUsersInfo();
+
     }
 
-    /*
-
-    <div class="col-lg-3" th:object="${test}">
-        <select class="form-control" id="testOrder" name="testOrder">
-            <option value="">Select Test Order</option>
-            <option th:each="test : ${tests}"
-                    th:value="${test.testCode}"
-                    th:text="${test.testCode}+' : '+${test.testName}"></option>
-        </select>
-    </div>
-     */
-    @PostMapping("/users/registered")
-    public String processRegister(User user){
-        //user.setDocument();
-        userRepository.save(user);
-
-        return "users/registered";
+    @PostMapping(value = "/users/create",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createUser(@RequestBody Map<String,String> json){
+        this.userService.add(Long.parseLong(json.get("id")),json.get("names"),json.get("lastnames"),json.get("email"),json.get("password"),json.get("birthdate"),json.get("documentType"));
     }
-    @GetMapping("/users/login")
-    public String getLoginForm(Model model){
-        model.addAttribute("user",new User());
 
-        return "users/login";
+    @PostMapping(value = "/users/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteSong(@RequestBody Map<String,String> json){
+        this.userService.deleteByName(json.get("names"));
+    }
+
+    @PostMapping(value="/users/update",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
+    public void updateUser(@RequestBody Map<String,String> json){
+        this.userService.updateByName(json.get("names"),json.get("newNames"),json.get("newLastnames"),json.get("newEmail"),json.get("newPassword"),json.get("newBirthdate"),json.get("newDocumentType"));
     }
 
 

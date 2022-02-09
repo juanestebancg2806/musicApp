@@ -80,8 +80,8 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-        User user1 = new User("user1","lastuser1","user1@g.com","admin",new Date(1998,6,28));
-        User user2 = new User("user2","lastuser2","user2@g.com","admin",new Date(1990,6,1));
+        User user1 = new User("user1","lastuser1","user1@g.com","admin","1998/6/28");//new Date(1998,6,28));
+        User user2 = new User("user2","lastuser2","user2@g.com","admin","1990/6/1");//new Date(1990,6,1));
         user1.setDocument(document1);
         user1.setId(1234L);
         user2.setDocument(document2);

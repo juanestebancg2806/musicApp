@@ -16,8 +16,8 @@ public class User {
 
     private String names,lastnames,email,password;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date birthdate;
+    //@DateTimeFormat(pattern = "MM/dd/yyyy")
+    private String birthdate;
 
     @ManyToOne
     private Document document;
@@ -26,7 +26,7 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Song> songs = new HashSet<>();
 
-    public User(String names, String lastnames, String email, String password, Date birthdate) {
+    public User(String names, String lastnames, String email, String password, String birthdate) {
         this.names = names;
         this.lastnames = lastnames;
         this.email = email;
@@ -85,11 +85,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
