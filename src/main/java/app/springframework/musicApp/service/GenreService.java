@@ -40,7 +40,7 @@ public class GenreService {
             Genre g = genres.get(0);
             g.setName(newName);
             this.genreRepository.save(g);
-            System.out.println("Genre updated JSON body");
+            //System.out.println("Genre updated JSON body");
         }
 
     }
@@ -52,7 +52,7 @@ public class GenreService {
             oldGenre = optionalGenre.get();
             oldGenre.setName(genre.getName());
             oldGenre = this.genreRepository.save(oldGenre);
-            System.out.println("Genre updated PUT");
+            //System.out.println("Genre updated PUT");
         }
 
         return oldGenre;
@@ -62,7 +62,7 @@ public class GenreService {
         if(genres.size() > 0){
             Genre g = genres.get(0);
             this.genreRepository.deleteById(g.getId());
-            System.out.println("Genre deleted JSON body");
+            //System.out.println("Genre deleted JSON body");
         }
 
     }

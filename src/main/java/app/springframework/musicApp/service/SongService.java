@@ -10,10 +10,7 @@ import app.springframework.musicApp.repositories.GenreRepository;
 import app.springframework.musicApp.repositories.SongRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +47,7 @@ public class SongService {
         //return  this.authorRepository.getAuthorsInfo().stream().map(a -> a.getNames()+"-"+a.getLastnames()+"-"+(a.getCountry().getName().length() > 0 ?a.getCountry().getName(): "null Country") ).collect(Collectors.toList());
     }
 
-    public void add(String name,int duration,String authorName,String genreName){
+    public Song add(String name,int duration,String authorName,String genreName){
         Song song = new Song(name,duration);
         List<Author> authors = this.authorRepository.findByName(authorName);
         if(authors.size() > 0){
@@ -63,8 +60,9 @@ public class SongService {
             song.setGenre(g);
         }
 
-        this.songRepository.save(song);
-        System.out.println("Song added JSON body");
+
+
+        return this.songRepository.save(song);
 
     }
 
@@ -74,9 +72,18 @@ public class SongService {
             Song s = songs.get(0);
             s.getUsers().stream().forEach(u -> u.getSongs().remove(s)); //se debe borrar la cancion de los usuarios que la tenian
             this.songRepository.deleteById(s.getId());
-            System.out.println("Song deleted JSON body");
+            //System.out.println("Song deleted JSON body");
         }
 
+    }
+
+    public void deleteById(Long id){
+        Optional<Song> optionalSong = this.songRepository.findById(id);
+        if(optionalSong.isPresent()){
+            Song song = optionalSong.get();
+            song.getUsers().stream().forEach(u -> u.getSongs().remove(song));
+            this.songRepository.deleteById(id);
+        }
     }
 
     public void updateByName(String name,String newName,int newDuration,String newAuthorName, String newGenreName){
@@ -100,6 +107,31 @@ public class SongService {
             this.songRepository.save(s);
             System.out.println("Song updated JSON body");
         }
+    }
+
+    public Song updateById(Song song,Long id){
+        Optional<Song> optionalSong = this.songRepository.findById(id);
+        Song oldSong = null;
+        if(optionalSong.isPresent()){
+            oldSong = optionalSong.get();
+            oldSong.setName(song.getName());
+            oldSong.setDuration(song.getDuration());
+            List<Author> authors = this.authorRepository.findByName(song.getAuthor().getNames());
+            if(authors.size() > 0){
+                Author a = authors.get(0);
+                oldSong.setAuthor(a);
+
+            }
+            List<Genre> genres = this.genreRepository.findByName(song.getGenre().getName());
+            if(genres.size() > 0){
+                Genre g = genres.get(0);
+                oldSong.setGenre(g);
+            }
+
+            oldSong = this.songRepository.save(oldSong);
+        }
+        return oldSong;
+
     }
 
 

@@ -22,7 +22,7 @@ public class PlaylistController {
         return this.playlistService.getPlaylists();
 
     }
-    @PutMapping(value = "/playlists/{idUser}-{idSong}")
+    @PostMapping(value = "/playlists/{idUser}-{idSong}")
     public void addSong(@PathVariable Long idUser,@PathVariable long idSong) {
         this.playlistService.addSongByIds(idUser,idSong);
 

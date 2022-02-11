@@ -28,7 +28,7 @@ public class CountryController {
 
     @GetMapping("/countries/names")
     public List<String> getCountriesNames(){
-        //model.addAttribute("countries",this.countryRepository.findAll());
+
         return  this.countryService.getNames();
 
     }
@@ -42,7 +42,7 @@ public class CountryController {
 
     @PutMapping(value="/countries/{id}",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
     public Country updateCountry(@RequestBody Country country,@PathVariable Long id){//json that contains 2 strings
-        //this.countryService.updateByName(json.get("name"),json.get("newName"));
+
         return this.countryService.updateById(country,id);
     }
 

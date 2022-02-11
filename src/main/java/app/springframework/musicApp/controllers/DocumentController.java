@@ -22,13 +22,13 @@ public class DocumentController {
 
     @GetMapping("/documents")
     public List<Document> getDocuments(){
-        //model.addAttribute("genres",this.genreRepository.findAll());
+
         return this.documentService.getDocuments();
 
     }
     @GetMapping("/documents/names")
     public List<String> getDocumentsNames(){
-        //model.addAttribute("countries",this.countryRepository.findAll());
+
         return  this.documentService.getNames();
 
     }
@@ -39,7 +39,7 @@ public class DocumentController {
 
     @PutMapping(value="/documents/{id}",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
     public Document updateDocument(@RequestBody Document document,@PathVariable Long id){//json that contains 2 strings
-        //this.documentService.updateByName(json.get("name"),json.get("newName"));
+
         return this.documentService.updateById(document,id);
     }
 

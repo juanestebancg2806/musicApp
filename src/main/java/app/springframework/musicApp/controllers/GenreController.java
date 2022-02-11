@@ -22,19 +22,19 @@ public class GenreController {
     }
     @GetMapping("/genres")
     public List<Genre> getGenres(){
-        //model.addAttribute("genres",this.genreRepository.findAll());
+
         return this.genreService.getGenres();
 
     }
     @GetMapping("/genres/names")
     public List<String> getGenresNames(){
-        //model.addAttribute("countries",this.countryRepository.findAll());
+
         return  this.genreService.getNames();
 
     }
     @PostMapping(value = "/genres",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Genre createGenre(@RequestBody Genre genre){
-        //System.out.println(country.getName()+" ----name");
+
         return this.genreService.add(genre);
     }
 
