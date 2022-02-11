@@ -3,6 +3,7 @@ package app.springframework.musicApp.controllers;
 import app.springframework.musicApp.domain.Author;
 import app.springframework.musicApp.domain.Country;
 import app.springframework.musicApp.repositories.AuthorRepository;
+import app.springframework.musicApp.repositories.SongRepository;
 import app.springframework.musicApp.service.AuthorService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -28,17 +29,29 @@ public class AuthorController {
         return this.authorService.getAuthors();
 
     }
-    @GetMapping("/authors/info")
+
+    @PostMapping(value = "/authors",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Author createAuthor(@RequestBody Map<String,String> json){
+        return this.authorService.add(json.get("names"),json.get("lastnames"),json.get("countryName"));
+    }
+
+
+    @GetMapping("/authors/general-information")
     public List <Map<String,String> > getAuthorsInfo(){
         return this.authorService.getAuthorsInfo();
 
     }
 
-    @PostMapping(value = "/authors/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createAuthor(@RequestBody Map<String,String> json){
-        this.authorService.add(json.get("names"),json.get("lastnames"),json.get("countryName"));
-    }
+    @PatchMapping(value = "/authors/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Author updateAuthor(@RequestBody Map<String, String> json,@PathVariable Long id){
+        return this.authorService.updateById(json.get("newNames"),json.get("newLastnames"),json.get("countryName"),id);
 
+    }
+    @DeleteMapping(value = "/authors/{id}")
+    public void deleteAuthor(@PathVariable Long id){
+        this.authorService.deleteById(id);
+    }
+    /*
     @PostMapping(value = "/authors/update",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateAuthor(@RequestBody Map<String,String> json){
         this.authorService.updateByName(json.get("names"),json.get("newNames"),json.get("newLastnames"),json.get("countryName"));
@@ -47,5 +60,6 @@ public class AuthorController {
     public void deleteAuthor(@RequestBody Map<String,String> json){
         this.authorService.deleteByName(json.get("names"));
     }
+*/
 
 }

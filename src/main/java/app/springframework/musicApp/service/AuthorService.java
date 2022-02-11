@@ -6,10 +6,7 @@ import app.springframework.musicApp.repositories.AuthorRepository;
 import app.springframework.musicApp.repositories.CountryRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +43,8 @@ public class AuthorService {
         //return  this.authorRepository.getAuthorsInfo().stream().map(a -> a.getNames()+"-"+a.getLastnames()+"-"+(a.getCountry().getName().length() > 0 ?a.getCountry().getName(): "null Country") ).collect(Collectors.toList());
     }
 
-    public void add(String names,String lastnames,String countryName){
+
+    public Author add(String names,String lastnames,String countryName){
         Author author = new Author(names,lastnames);
         List<Country> countries = this.countryRepository.findByName(countryName);
         if(countries.size() > 0){
@@ -54,8 +52,9 @@ public class AuthorService {
             author.setCountry(c);
 
         }
-        this.authorRepository.save(author);
+        author = this.authorRepository.save(author);
         System.out.println("Author added JSON body");
+        return author;
 
     }
     public void deleteByName(String name){
@@ -85,6 +84,31 @@ public class AuthorService {
             this.authorRepository.save(a);
             System.out.println("Author updated JSON body");
         }
+    }
+
+    public Author updateById(String newNames,String newLastnames,String countryName,Long id){
+        Optional<Author> authorOptional = this.authorRepository.findById(id);
+        Author author = null;
+        if(authorOptional.isPresent()){
+            author = authorOptional.get();
+            author.setNames(newNames);
+            author.setLastnames(newLastnames);
+            List<Country> countries = this.countryRepository.findByName(countryName);
+            if(countries.size() > 0){
+                Country c = countries.get(0);
+                author.setCountry(c);
+            }
+            author = this.authorRepository.save(author);
+
+        }
+
+        return author;
+
+
+    }
+
+    public void deleteById(Long id){
+        this.authorRepository.deleteById(id);
     }
 
 }

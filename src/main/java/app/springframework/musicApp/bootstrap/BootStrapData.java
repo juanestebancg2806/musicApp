@@ -5,7 +5,9 @@ import app.springframework.musicApp.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -13,17 +15,16 @@ public class BootStrapData implements CommandLineRunner {
     private final CountryRepository countryRepository;
     private final DocumentRepository documentRepository;
     private final GenreRepository genreRepository;
-    private  final PlaylistRepository playlistRepository;
+    //private  final PlaylistRepository playlistRepository;
     private  final SongRepository songRepository;
 
     private final UserRepository userRepository;
 
-    public BootStrapData(AuthorRepository authorRepository, CountryRepository countryRepository, DocumentRepository documentRepository, GenreRepository genreRepository, PlaylistRepository playlistRepository, SongRepository songRepository, UserRepository userRepository) {
+    public BootStrapData(AuthorRepository authorRepository, CountryRepository countryRepository, DocumentRepository documentRepository, GenreRepository genreRepository, SongRepository songRepository, UserRepository userRepository) {
         this.authorRepository = authorRepository;
         this.countryRepository = countryRepository;
         this.documentRepository = documentRepository;
         this.genreRepository = genreRepository;
-        this.playlistRepository = playlistRepository;
         this.songRepository = songRepository;
         this.userRepository = userRepository;
     }
