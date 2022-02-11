@@ -66,7 +66,7 @@ public class CountryService {
         if(!c.isEmpty()){
             oldCountry = c.get();
             oldCountry.setName(country.getName());
-            this.countryRepository.save(oldCountry);
+            oldCountry = this.countryRepository.save(oldCountry);
             System.out.println("Country updated PUT");
 
         }

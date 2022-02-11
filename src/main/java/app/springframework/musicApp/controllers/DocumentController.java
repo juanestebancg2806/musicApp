@@ -32,19 +32,21 @@ public class DocumentController {
         return  this.documentService.getNames();
 
     }
-    @PostMapping(value = "/documents/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createGenre(@RequestBody Document document){
-        //System.out.println(country.getName()+" ----name");
-        this.documentService.add(document);
-    }
-    @PostMapping(value="/documents/update",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
-    public void updateGenreJson(@RequestBody Map<String,String> json){//json that contains 2 strings
-        this.documentService.updateByName(json.get("name"),json.get("newName"));
+    @PostMapping(value = "/documents",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Document createDocument(@RequestBody Document document){
+        return this.documentService.add(document);
     }
 
-    @PostMapping(value = "/documents/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteGenre(@RequestBody Map<String,String> json){
-        this.documentService.deleteByName(json.get("name"));
+    @PutMapping(value="/documents/{id}",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
+    public Document updateDocument(@RequestBody Document document,@PathVariable Long id){//json that contains 2 strings
+        //this.documentService.updateByName(json.get("name"),json.get("newName"));
+        return this.documentService.updateById(document,id);
+    }
+
+    @DeleteMapping(value = "/documents/{id}")
+    public void deleteDocument(@PathVariable Long id){
+        this.documentService.deleteById(id);
+
     }
 
 }
