@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreService {
@@ -28,8 +29,8 @@ public class GenreService {
 
     }
 
-    public void add(Genre genre){
-        this.genreRepository.save(genre);
+    public Genre add(Genre genre){
+        return this.genreRepository.save(genre);
     }
 
     public void updateByName(String name,String newName){
@@ -43,6 +44,19 @@ public class GenreService {
         }
 
     }
+
+    public  Genre updateById(Genre genre,Long id){
+        Optional<Genre> optionalGenre = this.genreRepository.findById(id);
+        Genre oldGenre = null;
+        if(optionalGenre.isPresent()){
+            oldGenre = optionalGenre.get();
+            oldGenre.setName(genre.getName());
+            oldGenre = this.genreRepository.save(oldGenre);
+            System.out.println("Genre updated PUT");
+        }
+
+        return oldGenre;
+    }
     public void deleteByName(String name){
         List<Genre> genres = this.genreRepository.findByName(name);
         if(genres.size() > 0){
@@ -53,6 +67,9 @@ public class GenreService {
 
     }
 
+    public void deleteById(Long id){
+        this.genreRepository.deleteById(id);
+    }
 
 
 }

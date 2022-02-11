@@ -32,19 +32,22 @@ public class GenreController {
         return  this.genreService.getNames();
 
     }
-    @PostMapping(value = "/genres/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createGenre(@RequestBody Genre genre){
+    @PostMapping(value = "/genres",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Genre createGenre(@RequestBody Genre genre){
         //System.out.println(country.getName()+" ----name");
-        this.genreService.add(genre);
-    }
-    @PostMapping(value="/genres/update",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
-    public void updateGenreJson(@RequestBody Map<String,String> json){//json that contains 2 strings
-        this.genreService.updateByName(json.get("name"),json.get("newName"));
+        return this.genreService.add(genre);
     }
 
-    @PostMapping(value = "/genres/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteGenre(@RequestBody Map<String,String> json){
-        this.genreService.deleteByName(json.get("name"));
+
+    @PutMapping(value="/genres/{id}",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
+    public Genre updateGenre(@RequestBody Genre genre,@PathVariable Long id){//json that contains 2 strings
+        return this.genreService.updateById(genre,id);
+    }
+
+
+    @DeleteMapping(value = "/genres/{id}")
+    public void deleteGenre(@PathVariable Long id){
+        this.genreService.deleteById(id);
     }
 
 }
