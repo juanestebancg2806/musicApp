@@ -3,10 +3,7 @@ package app.springframework.musicApp.controllers;
 import app.springframework.musicApp.domain.User;
 import app.springframework.musicApp.service.PlaylistService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,13 +22,25 @@ public class PlaylistController {
         return this.playlistService.getPlaylists();
 
     }
-    @PostMapping(value = "/playlists/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addSong(@RequestBody Map<String,String> json) {
-        this.playlistService.addSong(json.get("userNames"),json.get("songName"));
+    @PutMapping(value = "/playlists/{idUser}-{idSong}")
+    public void addSong(@PathVariable Long idUser,@PathVariable long idSong) {
+        this.playlistService.addSongByIds(idUser,idSong);
+
+
     }
 
+    @DeleteMapping(value = "/playlists/{idUser}-{idSong}")
+    public void deleteSong(@PathVariable Long idUser,@PathVariable long idSong){
+            this.playlistService.deleteSongByIds(idUser,idSong);
+    }
+
+
+
+/*
     @PostMapping(value = "/playlists/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteSong(@RequestBody Map<String,String> json) {
         this.playlistService.deleteSong(json.get("userNames"),json.get("songName"));
-    }
+
+    }*/
+
 }

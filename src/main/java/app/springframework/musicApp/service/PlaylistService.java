@@ -6,10 +6,7 @@ import app.springframework.musicApp.repositories.SongRepository;
 import app.springframework.musicApp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,8 +42,23 @@ public class PlaylistService {
             s.getUsers().add(u);
             this.userRepository.save(u);
             this.songRepository.save(s);
-            System.out.println("Added song JSON body");
+            //System.out.println("Added song JSON body");
         }
+    }
+
+    public void addSongByIds(Long idUser,Long idSong){
+        Optional<User> userOptional = this.userRepository.findById(idUser);
+        Optional<Song> songOptional = this.songRepository.findById(idSong);
+        if(userOptional.isPresent() && songOptional.isPresent()){
+            User user = userOptional.get();
+            Song song = songOptional.get();
+            user.getSongs().add(song);
+            song.getUsers().add(user);
+            this.userRepository.save(user);
+            this.songRepository.save(song);
+            //System.out.println("Added song PUT");
+        }
+
     }
 
     public void deleteSong(String userNames,String songName){
@@ -59,7 +71,22 @@ public class PlaylistService {
             s.getUsers().remove(u);
             this.userRepository.save(u);
             this.songRepository.save(s);
-            System.out.println("Deleted song JSON body");
+            //System.out.println("Deleted song JSON body");
+        }
+
+    }
+
+    public void deleteSongByIds(Long idUser,Long idSong){
+        Optional<User> userOptional = this.userRepository.findById(idUser);
+        Optional<Song> songOptional = this.songRepository.findById(idSong);
+        if(userOptional.isPresent() && songOptional.isPresent()){
+            User user = userOptional.get();
+            Song song = songOptional.get();
+            user.getSongs().remove(song);
+            song.getUsers().remove(user);
+            this.userRepository.save(user);
+            this.songRepository.save(song);
+
         }
 
     }
