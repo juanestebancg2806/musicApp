@@ -34,20 +34,22 @@ public class UserController {
 
     }
 
-    @PostMapping(value = "/users/create",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createUser(@RequestBody Map<String,String> json){
-        this.userService.add(Long.parseLong(json.get("id")),json.get("names"),json.get("lastnames"),json.get("email"),json.get("password"),json.get("birthdate"),json.get("documentType"));
+    @PostMapping(value = "/users",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User createUser(@RequestBody Map<String,String> json){
+        return this.userService.add(Long.parseLong(json.get("id")),json.get("names"),json.get("lastnames"),json.get("email"),json.get("password"),json.get("birthdate"),json.get("documentType"));
     }
 
-    @PostMapping(value = "/users/delete",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteSong(@RequestBody Map<String,String> json){
-        this.userService.deleteByName(json.get("names"));
+    @PutMapping(value="/users/{id}",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
+    public User updateUser(@RequestBody User user,@PathVariable Long id){
+        return this.userService.updateById(user,id);
     }
 
-    @PostMapping(value="/users/update",consumes = MediaType.APPLICATION_JSON_VALUE) //Falla con request param, el requestParam me pide mandar por url la info
-    public void updateUser(@RequestBody Map<String,String> json){
-        this.userService.updateByName(json.get("names"),json.get("newNames"),json.get("newLastnames"),json.get("newEmail"),json.get("newPassword"),json.get("newBirthdate"),json.get("newDocumentType"));
+    @DeleteMapping(value = "/users/{id}")
+    public void deleteSong(@PathVariable Long id){
+        this.userService.deleteById(id);
     }
+
+
 
 
 }

@@ -7,10 +7,7 @@ import app.springframework.musicApp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +45,7 @@ public class UserService {
         return jsons;
     }
 
-    public void add(Long id,String names,String lastnames,String email,String password,String birthdate,String documentType){
+    public User add(Long id,String names,String lastnames,String email,String password,String birthdate,String documentType){
 
         User user = new User(names,lastnames,email,password,birthdate);
         user.setId(id);
@@ -57,8 +54,8 @@ public class UserService {
             Document d = documents.get(0);
             user.setDocument(d);
         }
-        this.userRepository.save(user);
-        System.out.println("User added JSON body");
+        return this.userRepository.save(user);
+
     }
 
     public void deleteByName(String names){ //si intento borrar uno que este en USER_SONG lanza excepcion, revisar cascade types
@@ -69,6 +66,10 @@ public class UserService {
             this.userRepository.deleteById(u.getId());
             System.out.println("User deleted JSON body");
         }
+    }
+
+    public void deleteById(Long id){
+        this.userRepository.deleteById(id);
     }
 
     public void updateByName(String names,String newNames,String newLastnames,String newEmail,String newPassword,String newBirthdate,String newDocumentType){
@@ -89,6 +90,29 @@ public class UserService {
             System.out.println("User updated JSON body");
         }
 
+    }
+
+    public User updateById(User user,Long id){
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        User oldUser = null;
+        if(optionalUser.isPresent()){
+            oldUser = optionalUser.get();
+            oldUser.setNames(user.getNames());
+            oldUser.setLastnames(user.getLastnames());
+            oldUser.setEmail(user.getEmail());
+            oldUser.setPassword(user.getPassword());
+            oldUser.setBirthdate(user.getBirthdate());
+            List<Document> documents = this.documentRepository.findByName(user.getDocument().getName());
+            if(documents.size() > 0){
+                Document d = documents.get(0);
+                oldUser.setDocument(d);
+            }
+
+            oldUser = this.userRepository.save(oldUser);
+        }
+
+
+        return oldUser;
     }
 
 
