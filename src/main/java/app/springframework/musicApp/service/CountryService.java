@@ -30,8 +30,8 @@ public class CountryService {
 
     }
 
-    public void add(Country country){
-        this.countryRepository.save(country);
+    public Country add(Country country){
+        return this.countryRepository.save(country);
     }
 
 
@@ -56,15 +56,21 @@ public class CountryService {
 
     }
 
-    public void updateById(Country country,Long id){
+    public void deleteById(Long id){
+        this.countryRepository.deleteById(id);
+    }
+
+    public Country updateById(Country country,Long id){
         Optional<Country> c = this.countryRepository.findById(id);
+        Country oldCountry = null;
         if(!c.isEmpty()){
-            Country oldCountry = c.get();
+            oldCountry = c.get();
             oldCountry.setName(country.getName());
             this.countryRepository.save(oldCountry);
             System.out.println("Country updated PUT");
 
         }
+        return oldCountry;
     }
 
 
