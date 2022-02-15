@@ -53,7 +53,7 @@ public class AuthorService {
 
         }
         author = this.authorRepository.save(author);
-        System.out.println("Author added JSON body");
+        //System.out.println("Author added JSON body");
         return author;
 
     }
